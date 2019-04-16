@@ -32,7 +32,19 @@ class Enigma
     return {encrypted: encrypt, key: keyInp, date: date}
   end
 
-  def decrypt(msg, keyInp, date = getDate)
-    key = parse(keyInp, date)
+  def self.decrypt(msg, keyInp, date = getDate)
+    a, b, c, d = self.parse(keyInp, date)
+    a = self.generate(a); b = self.generate(b)
+    c = self.generate(c); d = self.generate(d)
+    origin = ('a'..'z').to_a.push(' ')
+    decrypt = ""
+    msg.each_char do |char|
+      s = d.index(char); at = c[s]
+      s = c.index(at); at = b[s]
+      s = b.index(at); at = a[s]
+      s = a.index(at); at = origin[s]
+      decrypt << at
+    end
+    return {decrypted: decrypt, key: keyInp, date: date}
   end
 end
