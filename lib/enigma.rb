@@ -23,11 +23,14 @@ class Enigma
     c = self.generate(c); d = self.generate(d)
     origin = ('a'..'z').to_a.push(' ')
     encrypt = ""
+    count = 0
     msg.each_char do |char|
-      s = origin.index(char); at = a[s]
-      s = a.index(at); at = b[s]
-      s = b.index(at); at = c[s]
-      s = c.index(at); at = d[s]
+      count += 1; count = 0 if count > 3
+      s = origin.index(char)
+      case count
+      when 0; at = a[s]; when 1; at = b[s]
+      when 2; at = c[s]; when 3; at = d[s]
+      end
       encrypt << at
     end
     return {encrypted: encrypt, key: keyInp, date: date}
@@ -40,11 +43,14 @@ class Enigma
     c = self.generate(c); d = self.generate(d)
     origin = ('a'..'z').to_a.push(' ')
     decrypt = ""
+    count = 0
     msg.each_char do |char|
-      s = d.index(char); at = c[s]
-      s = c.index(at); at = b[s]
-      s = b.index(at); at = a[s]
-      s = a.index(at); at = origin[s]
+      count += 1; count = 0 if count > 3
+      case count
+      when 0; s = a.index(char); when 1; s = b.index(char)
+      when 2; s = c.index(char); when 3; s = d.index(char)
+      end
+      at = origin[s]
       decrypt << at
     end
     return {decrypted: decrypt, key: keyInp, date: date}
