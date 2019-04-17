@@ -1,9 +1,9 @@
 require 'time'
 
 class Enigma
-  def self.randKey; return rand(100000).to_s end
+  def self.rand_key; return rand(100000).to_s end
 
-  def self.getDate; return Time.now.strftime("%d%m%y") end
+  def self.get_date; return Time.now.strftime("%d%m%y") end
 
   def self.parse(key, date)
     offsets = (date.to_i**2).to_s[-4..-1].chars.map {|x| x.to_i}
@@ -16,8 +16,8 @@ class Enigma
 
   def self.generate(offset); return ('a'..'z').to_a.push(' ').rotate(offset) end
 
-  def self.encrypt(msg, keyInp = self.randKey, date = self.getDate)
-    keyInp ||= self.randKey; date ||= self.getDate
+  def self.encrypt(msg, keyInp = self.rand_key, date = self.get_date)
+    keyInp ||= self.rand_key; date ||= self.get_date
     a, b, c, d = self.parse(keyInp, date)
     a = self.generate(a); b = self.generate(b)
     c = self.generate(c); d = self.generate(d)
@@ -36,8 +36,8 @@ class Enigma
     return {encrypted: encrypt, key: keyInp, date: date}
   end
 
-  def self.decrypt(msg, keyInp, date = self.getDate)
-    date ||= self.getDate
+  def self.decrypt(msg, keyInp, date = self.get_date)
+    date ||= self.get_date
     a, b, c, d = self.parse(keyInp, date)
     a = self.generate(a); b = self.generate(b)
     c = self.generate(c); d = self.generate(d)
