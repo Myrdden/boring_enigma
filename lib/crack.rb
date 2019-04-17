@@ -10,8 +10,8 @@ class Enigma
       groups[count] << char
       count += 1; count = 0 if count > keyLength
     end
-    groups.each do |str|
-
+    groups.each do |k, str|
+        self.analyse(str)
     end
   end
 
@@ -34,6 +34,9 @@ class Enigma
   end
 
   def self.frequency(str)
-    str.each
+    puts str
   end
 end
+
+test = File.open('out.txt', 'r')
+Enigma.crack(test.read)
