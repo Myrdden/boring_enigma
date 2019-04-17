@@ -1,7 +1,6 @@
 require './lib/enigma'
 class Encrypter
-  def self.encrypt(msg, keyInp = Enigma.rand_key, date = Enigma.get_date)
-    keyInp ||= Enigma.rand_key; date ||= Enigma.get_date
+  def self.encrypt(msg, keyInp, date)
     a, b, c, d = Enigma.parse(keyInp, date)
     a = Enigma.generate(a); b = Enigma.generate(b)
     c = Enigma.generate(c); d = Enigma.generate(d)

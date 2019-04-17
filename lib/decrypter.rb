@@ -1,7 +1,6 @@
 require './lib/enigma.rb'
 class Decoder
-  def Enigma.decrypt(msg, keyInp, date = Enigma.get_date)
-    date ||= Enigma.get_date
+  def self.decrypt(msg, keyInp, date)
     a, b, c, d = Enigma.parse(keyInp, date)
     a = Enigma.generate(a); b = Enigma.generate(b)
     c = Enigma.generate(c); d = Enigma.generate(d)
