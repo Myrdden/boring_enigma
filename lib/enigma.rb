@@ -21,17 +21,22 @@ class Enigma
     a, b, c, d = self.parse(keyInp, date)
     a = self.generate(a); b = self.generate(b)
     c = self.generate(c); d = self.generate(d)
+    msg = msg.downcase
     origin = ('a'..'z').to_a.push(' ')
     encrypt = ""
     count = 0
     msg.each_char do |char|
       count += 1; count = 0 if count > 3
       s = origin.index(char)
-      case count
-      when 0; at = a[s]; when 1; at = b[s]
-      when 2; at = c[s]; when 3; at = d[s]
+      if char.match?(/[^a-z ]/)
+          encrypt << char
+      else
+        case count
+        when 0; at = a[s]; when 1; at = b[s]
+        when 2; at = c[s]; when 3; at = d[s]
+        end
+        encrypt << at
       end
-      encrypt << at
     end
     return {encrypted: encrypt, key: keyInp, date: date}
   end
@@ -41,17 +46,22 @@ class Enigma
     a, b, c, d = self.parse(keyInp, date)
     a = self.generate(a); b = self.generate(b)
     c = self.generate(c); d = self.generate(d)
+    msg = msg.downcase
     origin = ('a'..'z').to_a.push(' ')
     decrypt = ""
     count = 0
     msg.each_char do |char|
       count += 1; count = 0 if count > 3
-      case count
-      when 0; s = a.index(char); when 1; s = b.index(char)
-      when 2; s = c.index(char); when 3; s = d.index(char)
+      if char.match?(/[^a-z ]/)
+          decrypt << char
+      else
+        case count
+        when 0; s = a.index(char); when 1; s = b.index(char)
+        when 2; s = c.index(char); when 3; s = d.index(char)
+        end
+        at = origin[s]
+        decrypt << at
       end
-      at = origin[s]
-      decrypt << at
     end
     return {decrypted: decrypt, key: keyInp, date: date}
   end

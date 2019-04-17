@@ -5,7 +5,7 @@ if ARGV[0]
   if ARGV[1]
     output = File.open(ARGV[1], 'w')
     key = ARGV[2]; date = ARGV[3]
-    encrypted = Enigma.encrypt(input.read, key, date)
+    encrypted = Enigma.encrypt(input.read.chomp, key, date)
     output.write("#{encrypted[:key]}\n#{encrypted[:date]}\n#{encrypted[:encrypted]}")
     puts "Wrote to file #{output.path} with key #{encrypted[:key]} and date #{encrypted[:date]}"
     input.close; output.close
