@@ -8,7 +8,7 @@ class Enigma
   def self.get_date; return Time.now.strftime("%d%m%y") end
 
   def self.parse(key, date)
-    require 'pry';binding.pry
+    #require 'pry';binding.pry
     offsets = (date.to_i**2).to_s[-4..-1].chars.map {|x| x.to_i}
     a = key[0..1].to_i + offsets[0]
     b = key[1..2].to_i + offsets[1]

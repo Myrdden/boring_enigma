@@ -13,12 +13,12 @@ class Encrypter
       if char.match?(/[^a-z ]/)
           encrypt << char
       else
-        count += 1; count = 0 if count > 3
         case count
         when 0; at = a[s]; when 1; at = b[s]
         when 2; at = c[s]; when 3; at = d[s]
         end
         encrypt << at
+        count += 1; count = 0 if count > 3
       end
     end
     return {encrypted: encrypt, key: keyInp, date: date}

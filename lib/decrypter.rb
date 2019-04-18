@@ -1,5 +1,5 @@
 require './lib/enigma.rb'
-class Decoder
+class Decrypter
   def self.decrypt(msg, keyInp, date)
     a, b, c, d = Enigma.parse(keyInp, date)
     a = Enigma.generate(a); b = Enigma.generate(b)
@@ -12,13 +12,13 @@ class Decoder
       if char.match?(/[^a-z ]/)
           decrypt << char
       else
-        count += 1; count = 0 if count > 3
         case count
         when 0; s = a.index(char); when 1; s = b.index(char)
         when 2; s = c.index(char); when 3; s = d.index(char)
         end
         at = origin[s]
         decrypt << at
+        count += 1; count = 0 if count > 3
       end
     end
     return {decrypted: decrypt, key: keyInp, date: date}
